@@ -3,9 +3,8 @@ package gothic
 /*
 #cgo !tcl85 LDFLAGS: -LC:/Tcl/bin -ltcl86 -ltk86
 #cgo !tcl85 CFLAGS: -IC:/Tcl/include/tcl8.6
-#cgo tcl85 LDFLAGS: -ltcl8.5 -ltk8.5
-#cgo tcl85 CFLAGS: -I/usr/include/tcl8.5
-#cgo darwin tcl85 CFLAGS: -I/opt/X11/include
+#cgo tcl85 LDFLAGS: -LC:/Tcl/bin -ltcl85 -ltk85
+#cgo tcl85 CFLAGS: -IC:/Tcl/include/tcl8.5
 
 #include "interpreter.h"
 */
