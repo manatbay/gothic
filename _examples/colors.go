@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nsf/gothic"
+import "github.com/Horkonaut/gothic"
 
 func main() {
 	ir := gothic.NewInterpreter(`

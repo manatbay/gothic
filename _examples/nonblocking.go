@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nsf/gothic"
+import "github.com/Horkonaut/gothic"
 import "time"
 
 func proc(ir *gothic.Interpreter, num string) {
@@ -10,7 +10,7 @@ func proc(ir *gothic.Interpreter, num string) {
 	recv := make(chan int)
 
 	// register channel and enable button
-	ir.RegisterCommand(channame, func(_ string, arg int){
+	ir.RegisterCommand(channame, func(_ string, arg int) {
 		recv <- arg
 	})
 	ir.Eval(`%{} configure -state normal`, button)

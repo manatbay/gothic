@@ -1,12 +1,12 @@
 package main
 
-import "github.com/nsf/gothic"
+import "github.com/Horkonaut/gothic"
 import "math/big"
 
 type calc struct {
 	*gothic.Interpreter
-	args [2]*big.Int
-	lastOp string
+	args    [2]*big.Int
+	lastOp  string
 	afterOp bool
 }
 
@@ -164,7 +164,7 @@ bind . <BackSpace>   { go::ClearAll }
 	`)
 	ir.RegisterCommands("go", &calc{
 		Interpreter: ir,
-		afterOp: true,
+		afterOp:     true,
 	})
 	<-ir.Done
 }

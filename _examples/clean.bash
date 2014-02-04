@@ -1,6 +1,5 @@
 #!/bin/bash
 
 for i in *.go; do
-	rm -f ${i%.go}
+	rm -f ${i%.go}.exe
 done
-rm -f *.[568]

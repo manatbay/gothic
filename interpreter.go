@@ -1,8 +1,8 @@
 package gothic
 
 /*
-#cgo !tcl85 LDFLAGS: -ltcl8.6 -ltk8.6
-#cgo !tcl85 CFLAGS: -I/usr/include/tcl8.6
+#cgo !tcl85 LDFLAGS: -LC:/Tcl/bin -ltcl86 -ltk86
+#cgo !tcl85 CFLAGS: -IC:/Tcl/include/tcl8.6
 #cgo tcl85 LDFLAGS: -ltcl8.5 -ltk8.5
 #cgo tcl85 CFLAGS: -I/usr/include/tcl8.5
 #cgo darwin tcl85 CFLAGS: -I/opt/X11/include
@@ -11,15 +11,15 @@ package gothic
 */
 import "C"
 import (
+	"bytes"
 	"errors"
+	"fmt"
+	"image"
 	"reflect"
 	"runtime"
 	"strings"
-	"bytes"
-	"unsafe"
-	"image"
 	"sync"
-	"fmt"
+	"unsafe"
 )
 
 const (
@@ -253,7 +253,7 @@ func (ir *Interpreter) Set(name string, val interface{}) error {
 
 // Every TCL error goes through the filter passed to this function. If you pass
 // nil, then no error filter is set.
-func (ir *Interpreter) ErrorFilter(filt func(error)error) {
+func (ir *Interpreter) ErrorFilter(filt func(error) error) {
 	if C.Tcl_GetCurrentThread() == ir.ir.thread {
 		ir.ir.errfilt = filt
 	}
