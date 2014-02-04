@@ -131,25 +131,25 @@ foreach i {1 2 3 4} { grid rowconfigure . $i -weight 1 }
 foreach i {0 1 2 3} { grid columnconfigure . $i -weight 1 }
 
 bind . 0             { go::AppendNum 0 }
-bind . <KP_Insert>   { go::AppendNum 0 }
+bind . <Insert>      { go::AppendNum 0 }
 bind . 1             { go::AppendNum 1 }
-bind . <KP_End>      { go::AppendNum 1 }
+bind . <End>         { go::AppendNum 1 }
 bind . 2             { go::AppendNum 2 }
-bind . <KP_Down>     { go::AppendNum 2 }
+bind . <Down>        { go::AppendNum 2 }
 bind . 3             { go::AppendNum 3 }
-bind . <KP_Next>     { go::AppendNum 3 }
+bind . <Next>        { go::AppendNum 3 }
 bind . 4             { go::AppendNum 4 }
-bind . <KP_Left>     { go::AppendNum 4 }
+bind . <Left>        { go::AppendNum 4 }
 bind . 5             { go::AppendNum 5 }
-bind . <KP_Begin>    { go::AppendNum 5 }
+bind . <Clear>       { go::AppendNum 5 }
 bind . 6             { go::AppendNum 6 }
-bind . <KP_Right>    { go::AppendNum 6 }
+bind . <Right>       { go::AppendNum 6 }
 bind . 7             { go::AppendNum 7 }
-bind . <KP_Home>     { go::AppendNum 7 }
+bind . <Home>        { go::AppendNum 7 }
 bind . 8             { go::AppendNum 8 }
-bind . <KP_Up>       { go::AppendNum 8 }
+bind . <Up>          { go::AppendNum 8 }
 bind . 9             { go::AppendNum 9 }
-bind . <KP_Prior>    { go::AppendNum 9 }
+bind . <Prior>       { go::AppendNum 9 }
 bind . +             { go::ApplyOp + }
 bind . <KP_Add>      { go::ApplyOp + }
 bind . -             { go::ApplyOp - }
