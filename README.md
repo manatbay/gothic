@@ -62,7 +62,7 @@ Using Gothic on a Windows 64-bit machine:
 
 2. If not already present, install [Git](https://msysgit.github.io/). I tested with `Git-1.9.5-preview20150319.exe`
 
-3. Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` *(It may be necessary to install in administrative mode, but having Tcl in the path and possibly TCL_LIBRARY set in the environment should suffice.)*
+3. Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` (non-administrative install should suffice.)
 This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If install dir is different from `C:\Tcl`, update [interpreter.go](https://github.com/Horkonaut/gothic/blob/master/interpreter.go) and change the following instructions as necessary.
 
 4. Download `mingw-w64-install.exe` from [the MinGW-w64 site](http://sourceforge.net/projects/mingw-w64/) and install to the directory of your choice (e.g., `C:\mingw-w64`). Add the bin directory to your path. I tested with the following install options:
@@ -74,9 +74,9 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 
 5. Download the [latest pexports](http://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/) and extract pexports.exe to the directory of your choice. Add this directory to your path. I tested with `pexports-0.46-mingw32-bin.tar.xz`
 
-6. It may be best to reboot at this point, to ensure the installs are correctly in the path
+6. Reboot to ensure the installs are correctly referenced by the system (particularly for the sake of ActiveTcl working properly)
 
-7. Run the following build commands:
+7. Log in, open a command prompt and run the following build commands:
 	```cmd
 	set PATH=C:\mingw-w64\mingw64\bin;C:\git\bin;%PATH%
 	set GOPATH=%HOMEDRIVE%%HOMEPATH%\Desktop\GoTcl
@@ -102,7 +102,7 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 	bash clean.bash && bash all.bash
 	```
 
-8. Test the examples (e.g., `colors.exe`).
+8. Test the examples (e.g., run `colors.exe`).
 
 ### For 32-bit Windows (UNTESTED)
 ------------------
