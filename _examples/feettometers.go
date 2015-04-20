@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Horkonaut/gothic"
+import "github.com/MartyMacGyver/gothic"
 
 const init_script = `
 	wm title . "Feet to Meters"

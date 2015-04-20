@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Horkonaut/gothic"
+import "github.com/MartyMacGyver/gothic"
 import "math/big"
 
 type calc struct {

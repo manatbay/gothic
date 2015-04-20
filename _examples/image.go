@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Horkonaut/gothic"
+import "github.com/MartyMacGyver/gothic"
 import "image/png"
 import "image"
 import "os"

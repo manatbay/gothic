@@ -1,7 +1,7 @@
 package main
 
 import "fmt"
-import "github.com/Horkonaut/gothic"
+import "github.com/MartyMacGyver/gothic"
 
 func dispatcher(c <-chan string) {
 	for v := range c {
