@@ -67,11 +67,11 @@ That's it. See "examples" directory it has the use cases for most of the API.
 * Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` (non-administrative install should suffice.) I used `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If your install dir is different from `C:\Tcl`, update [interpreter.go](https://github.com/MartyMacGyver/gothic/blob/master/interpreter.go) accordingly.
 
 * Install [MinGW-w64](http://sourceforge.net/projects/mingw-w64/) and install to the directory of your choice (e.g., `C:\mingw-w64`). Add the bin directory to your path. I used `mingw-w64-install.exe` with the following install options:
-** Version: 4.9.2
-** Architecture: x86_64
-** Threads: posix
-** Exception: seh
-** Build Revision: 2
+	* Version: 4.9.2
+	* Architecture: x86_64
+	* Threads: posix
+	* Exception: seh
+	* Build Revision: 2
 
 * Install [pexports](http://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/) to the directory of your choice. Add this directory to your path. I used `pexports-0.46-mingw32-bin.tar.xz`.
 
