@@ -1,4 +1,4 @@
-#### *This fork is primarily concerned with Windows x64 use cases*
+#### *This fork is primarily concerned with Windows 64-bit use cases with Tcl/Tk 8.6*
 
 *Forked from [Horkonaut/gothic](https://github.com/Horkonaut/gothic) which was forked from [nsf/gothic](https://github.com/nsf/gothic).*
 
