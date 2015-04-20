@@ -58,28 +58,30 @@ That's it. See "examples" directory it has the use cases for most of the API.
 ### For 64-bit Windows
 ------------------
 
-Using Gothic on a Windows 64-bit machine:
+#### Prerequisites (where not already present and correctly configured):
 
-1. If not already present, install [Go](https://golang.org/dl/). I tested with `go1.4.2.linux-amd64.tar.gz`
+* Install [Go](https://golang.org/dl/). I used `go1.4.2.linux-amd64.tar.gz`.
 
-2. If not already present, install [Git](https://msysgit.github.io/). I tested with `Git-1.9.5-preview20150319.exe`
+* Install Git (e.g., [msysGit](https://msysgit.github.io/), which includes useful shell commands). I used `Git-1.9.5-preview20150319.exe`.
 
-3. Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` (non-administrative install should suffice.)
-This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If install dir is different from `C:\Tcl`, update [interpreter.go](https://github.com/Horkonaut/gothic/blob/master/interpreter.go) and change the following instructions as necessary.
+* Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` (non-administrative install should suffice.) I used `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If your install dir is different from `C:\Tcl`, update [interpreter.go](https://github.com/MartyMacGyver/gothic/blob/master/interpreter.go) accordingly.
 
-4. Download `mingw-w64-install.exe` from [the MinGW-w64 site](http://sourceforge.net/projects/mingw-w64/) and install to the directory of your choice (e.g., `C:\mingw-w64`). Add the bin directory to your path. I tested with the following install options:
- * Version: 4.9.2
- * Architecture: x86_64
- * Threads: posix
- * Exception: seh
- * Build Revision: 2
+* Install [MinGW-w64](http://sourceforge.net/projects/mingw-w64/) and install to the directory of your choice (e.g., `C:\mingw-w64`). Add the bin directory to your path. I used `mingw-w64-install.exe` with the following install options:
+** Version: 4.9.2
+** Architecture: x86_64
+** Threads: posix
+** Exception: seh
+** Build Revision: 2
 
-5. Download the [latest pexports](http://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/) and extract pexports.exe to the directory of your choice. Add this directory to your path. I tested with `pexports-0.46-mingw32-bin.tar.xz`
+* Install [pexports](http://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/) to the directory of your choice. Add this directory to your path. I used `pexports-0.46-mingw32-bin.tar.xz`.
 
-6. Reboot to ensure the installs are correctly referenced by the system (particularly for the sake of ActiveTcl working properly)
+* **Reboot** to ensure the installs are correctly referenced by the system (particularly for the sake of ActiveTcl working properly)
 
-7. Log in, open a command prompt and run the following build commands:
+#### Build and test:
+
+* Log in, open a command prompt and run the following build commands:
 	```cmd
+	:; Configure build environment variables
 	set PATH=C:\mingw-w64\mingw64\bin;C:\git\bin;%PATH%
 	set GOPATH=%HOMEDRIVE%%HOMEPATH%\Desktop\GoTcl
 	set TCLPATH=C:\Tcl
@@ -87,22 +89,30 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 	set C_INCLUDE_PATH=%TCLPATH%\include
 	set LD_LIBRARY_PATH=%TCLPATH%\lib
 	
-	:; Create the libraries (once)
+	:; Create the Tcl libraries (once)
 	cd %TCLPATH%\bin
 	pexports tcl86.dll > tcl86.def
 	dlltool -D tcl86.dll -d tcl86.def -l libtcl86.a
 	pexports tk86.dll > tk86.def
 	dlltool -D tk86.dll -d tk86.def -l libtk86.a
 	
-	:; Create the libraries (once)
+	:; Create a workspace and build the project
 	mkdir "%GOPATH%"
 	cd /d "%GOPATH%"
 	go get github.com/MartyMacGyver/gothic
+	
+	:; Run unit tests
+	cd /d %GOPATH%\src\github.com\MartyMacGyver\gothic
+	go test -v
+
+	:; Build the examples
 	cd /d %GOPATH%\src\github.com\MartyMacGyver\gothic\_examples
 	bash clean.bash && bash all.bash
-	```
 
-8. Test the examples (e.g., run `colors.exe`).
+	:; Try the examples
+	colors.exe
+	...etc.
+	```
 
 ### For 32-bit Windows (UNTESTED)
 ------------------
