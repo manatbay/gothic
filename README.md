@@ -1,7 +1,9 @@
-#### *This fork is primarily concerned with Windows 64-bit use cases with Tcl/Tk 8.6*
-
 *Forked from [Horkonaut/gothic](https://github.com/Horkonaut/gothic) which was forked from [nsf/gothic](https://github.com/nsf/gothic).*
 
+## This fork focuses on Windows 64-bit + Tcl/Tk 8.6 use cases
+
+----------
+----------
 ----------
 
 # Tcl/Tk Go Bindings
