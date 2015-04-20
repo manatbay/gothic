@@ -86,7 +86,6 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 	set CPLUS_INCLUDE_PATH=%TCLPATH%\include
 	set C_INCLUDE_PATH=%TCLPATH%\include
 	set LD_LIBRARY_PATH=%TCLPATH%\lib
-	set TCL_LIBRARY=%TCLPATH%\lib\tcl8.6
 	
 	:; Create the libraries (once)
 	cd %TCLPATH%\bin
@@ -99,7 +98,6 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 	mkdir "%GOPATH%"
 	cd /d "%GOPATH%"
 	go get github.com/MartyMacGyver/gothic
-	
 	cd /d %GOPATH%\src\github.com\MartyMacGyver\gothic\_examples
 	bash clean.bash && bash all.bash
 	```
