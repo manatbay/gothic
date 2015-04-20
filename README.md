@@ -62,7 +62,7 @@ Using Gothic on a Windows 64-bit machine:
 
 2. If not already present, install [Git](https://msysgit.github.io/). I tested with `Git-1.9.5-preview20150319.exe`
 
-3. Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` in **adminstrative** mode (otherwise DLLs and libs will not be accessible to your compiled programs!)
+3. Install [ActiveTCL Windows 64-bit](http://www.activestate.com/activetcl/downloads) to `C:\Tcl` *(It may be necessary to install in administrative mode, but having Tcl in the path and possibly TCL_LIBRARY set in the environment should suffice.)*
 This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If install dir is different from `C:\Tcl`, update [interpreter.go](https://github.com/Horkonaut/gothic/blob/master/interpreter.go) and change the following instructions as necessary.
 
 4. Download `mingw-w64-install.exe` from [the MinGW-w64 site](http://sourceforge.net/projects/mingw-w64/) and install to the directory of your choice (e.g., `C:\mingw-w64`). Add the bin directory to your path. I tested with the following install options:
@@ -99,8 +99,7 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 	go get github.com/MartyMacGyver/gothic
 	
 	cd /d %GOPATH%\src\github.com\MartyMacGyver\gothic\_examples
-	bash clean.bash
-	bash all.bash
+	bash clean.bash && bash all.bash
 	```
 
 8. Test the examples (e.g., `colors.exe`).
