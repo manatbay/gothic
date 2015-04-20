@@ -1,6 +1,8 @@
-Forked from [Horkonaut/gothic](https://github.com/Horkonaut/gothic) which was forked from [nsf/gothic](https://github.com/nsf/gothic).
+#### *This fork is primarily concerned with Windows x64 use cases*
 
-This fork is primarily concerned with Windows x64 use cases
+*Forked from [Horkonaut/gothic](https://github.com/Horkonaut/gothic) which was forked from [nsf/gothic](https://github.com/nsf/gothic).*
+
+----------
 
 # Tcl/Tk Go Bindings
 
@@ -15,21 +17,22 @@ In its current state the bindings are a bit Tk-oriented. You can't create an
 interpreter instance without Tk. In future it's likely it will be changed.
 
 The API is very simple. In the package you have one type and one function:
-
+```
 type Interpreter struct
 func NewInterpreter (init interface{}) *Interpreter
-
+```
 In order to launch an interpreter you have to call the "NewInterpreter"
 function, it will make a new instance of a tcl/tk interpreter in a separate
 goroutine, execute "init", block in Tk's main loop and then the function
 returns a pointer to the new instance of an "Interpreter".
 
 "init" could be a string with tcl commands that are executed before Tk's main
-loop, or a function with this signature: "func (*Interpreter)". This function
+loop, or a function with this signature: `func (*Interpreter)`. This function
 gets executed the same way as the string, that is - before Tk's main loop.
 
 Here are the methods of the "Interpreter":
 
+```
 func (*Interpreter) ErrorFilter(filt func(error) error)
 func (*Interpreter) Eval(args ...interface{}) error
 func (*Interpreter) EvalAs(out interface{}, args ...interface{}) error
@@ -39,6 +42,7 @@ func (*Interpreter) RegisterCommand(name string, cbfunc interface{}) error
 func (*Interpreter) UnregisterCommand(name string) error
 func (*Interpreter) RegisterCommands(name string, val interface{}) error
 func (*Interpreter) UnregisterCommands(name string) error
+```
 
 As it was stated before, the "Interpreter" is being executed in a separate
 goroutine and each method is completely thread-safe. Also every method is
@@ -73,7 +77,7 @@ This was tested with `ActiveTcl8.6.3.1.298624-win32-x86_64-threaded.exe`. If ins
 6. It may be best to reboot at this point, to ensure the installs are correctly in the path
 
 7. Run the following build commands:
-	```
+	```cmd
 	set PATH=C:\mingw-w64\mingw64\bin;C:\git\bin;%PATH%
 	set GOPATH=%HOMEDRIVE%%HOMEPATH%\Desktop\GoTcl
 	set TCLPATH=C:\Tcl
