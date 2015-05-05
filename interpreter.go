@@ -504,7 +504,8 @@ func (ir *interpreter) upload_image(name string, img image.Image) error {
 
 	status := C.Tk_PhotoPutBlock(ir.C, handle, &block, 0, 0,
 		C.int(nrgba.Rect.Max.X), C.int(nrgba.Rect.Max.Y),
-		C.TK_PHOTO_COMPOSITE_SET)
+		C.TK_PHOTO_COMPOSITE_SET) // alpha should be non-zero or you may get peculiar slowdowns
+		// Note: C.TK_PHOTO_COMPOSITE_OVERLAY would overlay an existing image
 	if status != C.TCL_OK {
 		return errors.New(C.GoString(C.Tcl_GetStringResult(ir.C)))
 	}
