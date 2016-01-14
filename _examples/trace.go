@@ -1,6 +1,6 @@
 package main
 
-import tk "github.com/MartyMacGyver/gothic"
+import tk "github.com/sinni800/gothic"
 import "fmt"
 
 func main() {
