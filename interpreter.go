@@ -44,7 +44,7 @@ type Interpreter struct {
 // Creates a new instance of the *gothic.Interpreter. But before interpreter
 // enters the Tk's main loop it will execute `init`. Init argument could be a
 // string or a function with this signature: "func(*gothic.Interpreter)".
-func NewInterpreter(init interface{}) *Interpreter {
+func NewInterpreter(preinit interface{}, init interface{}) *Interpreter {
 	initdone := make(chan int)
 	done := make(chan int)
 
@@ -54,7 +54,7 @@ func NewInterpreter(init interface{}) *Interpreter {
 	go func() {
 		var err error
 		runtime.LockOSThread()
-		ir.ir, err = new_interpreter()
+		ir.ir, err = new_interpreter(preinit)
 		if err != nil {
 			panic(err)
 		}
@@ -360,7 +360,7 @@ func release_interpreter(ir *interpreter) {
 	global_handles.free_handle(ir.id)
 }
 
-func new_interpreter() (*interpreter, error) {
+func new_interpreter(init interface{}) (*interpreter, error) {
 	ir := &interpreter{
 		C:              C.Tcl_CreateInterp(),
 		errfilt:        func(err error) error { return err },
@@ -370,6 +370,18 @@ func new_interpreter() (*interpreter, error) {
 		valuesbuf:      make([]reflect.Value, 0, 10),
 		queue:          make(chan async_action, 50),
 		thread:         C.Tcl_GetCurrentThread(),
+	}
+
+	C.Tcl_FindExecutable(C.CString(os.Args[0]))
+
+	switch realinit := init.(type) {
+	case string:
+		err := ir.eval([]byte(realinit))
+		if err != nil {
+			panic(err)
+		}
+	case func(*interpreter):
+		realinit(ir)
 	}
 
 	status := C.Tcl_Init(ir.C)
