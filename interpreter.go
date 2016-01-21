@@ -455,6 +455,13 @@ func go_value_to_tcl_obj(value interface{}) *C.Tcl_Obj {
 		s := v.String()
 		sh := *(*reflect.StringHeader)(unsafe.Pointer(&s))
 		return C.Tcl_NewStringObj((*C.char)(unsafe.Pointer(sh.Data)), C.int(len(s)))
+	case reflect.Slice, reflect.Array:
+		objv := make([]*C.Tcl_Obj, v.Len())
+		for i := 0; i < v.Len(); i++ {
+			objv[i] = go_value_to_tcl_obj(v.Index(i).Interface())
+		}
+		
+		return C.Tcl_NewListObj(C.int(len(objv)), &objv[0])
 	}
 	return nil
 }
