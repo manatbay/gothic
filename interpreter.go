@@ -439,7 +439,7 @@ func (ir *interpreter) eval_as(out interface{}, script []byte) error {
 
 func go_value_to_tcl_obj(value interface{}) *C.Tcl_Obj {
 	v := reflect.ValueOf(value)
-	switch v.Kind() {
+	switch v.Kind() {	
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return C.Tcl_NewWideIntObj(C.Tcl_WideInt(v.Int()))
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
@@ -613,8 +613,14 @@ func _gotk_go_command_handler(clidataup unsafe.Pointer, objc C.int, objv unsafe.
 		ir.valuesbuf = append(ir.valuesbuf, v)
 	}
 
-	// TODO: handle return value
-	f.Call(ir.valuesbuf)
+
+	ret := f.Call(ir.valuesbuf)
+	if len(ret) == 1 {
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface()))
+	} else if len(ret) > 1 {
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret))
+	}
+	
 
 	return C.TCL_OK
 }
@@ -657,8 +663,12 @@ func _gotk_go_method_handler(clidataup unsafe.Pointer, objc C.int, objv unsafe.P
 		ir.valuesbuf = append(ir.valuesbuf, v)
 	}
 
-	// TODO: handle return value
-	f.Call(ir.valuesbuf)
+	ret := f.Call(ir.valuesbuf)
+	if len(ret) == 1 {
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface()))
+	} else if len(ret) > 1 {
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret))
+	}
 
 	return C.TCL_OK
 }
