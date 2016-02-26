@@ -437,7 +437,7 @@ func (ir *interpreter) eval_as(out interface{}, script []byte) error {
 	return ir.tcl_obj_to_go_value(C.Tcl_GetObjResult(ir.C), v)
 }
 
-func go_value_to_tcl_obj(value interface{}) *C.Tcl_Obj {
+func go_value_to_tcl_obj(value interface{}, interp *interpreter) *C.Tcl_Obj {
 	v := reflect.ValueOf(value)
 	switch v.Kind() {	
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
@@ -458,16 +458,27 @@ func go_value_to_tcl_obj(value interface{}) *C.Tcl_Obj {
 	case reflect.Slice, reflect.Array:
 		objv := make([]*C.Tcl_Obj, v.Len())
 		for i := 0; i < v.Len(); i++ {
-			objv[i] = go_value_to_tcl_obj(v.Index(i).Interface())
+			objv[i] = go_value_to_tcl_obj(v.Index(i).Interface(), interp)
 		}
 		
 		return C.Tcl_NewListObj(C.int(len(objv)), &objv[0])
-	}
+	case reflect.Map:
+		tclmap := C.Tcl_NewDictObj();
+		
+		for _, value := range v.MapKeys() {
+			key := go_value_to_tcl_obj(value.Interface(), interp)
+			val := go_value_to_tcl_obj(v.MapIndex(value).Interface(), interp)
+			if key != nil && val != nil {
+				C.Tcl_DictObjPut(interp.C, tclmap, key, val)
+			}
+		}
+		return tclmap
+	} 
 	return nil
 }
 
 func (ir *interpreter) set(name string, value interface{}) error {
-	obj := go_value_to_tcl_obj(value)
+	obj := go_value_to_tcl_obj(value, ir)
 	if obj == nil {
 		return errors.New("gothic: cannot convert Go value to TCL object")
 	}
@@ -616,9 +627,9 @@ func _gotk_go_command_handler(clidataup unsafe.Pointer, objc C.int, objv unsafe.
 
 	ret := f.Call(ir.valuesbuf)
 	if len(ret) == 1 {
-		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface()))
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface(), ir))
 	} else if len(ret) > 1 {
-		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret))
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret, ir))
 	}
 	
 
@@ -665,9 +676,9 @@ func _gotk_go_method_handler(clidataup unsafe.Pointer, objc C.int, objv unsafe.P
 
 	ret := f.Call(ir.valuesbuf)
 	if len(ret) == 1 {
-		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface()))
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret[0].Interface(), ir))
 	} else if len(ret) > 1 {
-		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret))
+		C.Tcl_SetObjResult(ir.C, go_value_to_tcl_obj(ret, ir))
 	}
 
 	return C.TCL_OK
